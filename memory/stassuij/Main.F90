@@ -4,7 +4,8 @@ implicit none
 real(8), parameter :: MHz = 1600d6 ! CPU frequency, consistent with timebase() function
 
 integer, parameter :: npart = 12, ntrs=220, ncsp = 4, ncpp = 4, ns = 2048, ns_all = 4096
-integer, parameter :: numv3c = 20, nsp = 2048, nt = 132, nprs = 66, ntrsp = 221, nsg = 512
+!integer, parameter :: numv3c = 20, nsp = 2048, nt = 132, nprs = 66, ntrsp = 221, nsg = 512
+integer, parameter :: numv3c = 20, nsp = 20480, nt = 1320, nprs = 66, ntrsp = 221, nsg = 512
 
 real(8) h2m, h2mcsb, pi, drh, drm,rhdrh, rmxrm, fr
 common /pass/ h2m, h2mcsb, pi, drh(3,nprs), drm(nprs),rhdrh(3,ntrsp), rmxrm(3,ntrsp), fr(6,nprs)
