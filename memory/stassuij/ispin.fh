@@ -1,7 +1,7 @@
 !  FBN isospin mapping arrays.      
       
-!IBM* SOURCEFORM(FIXED)
-!DIR$ FIXED
+! IBM* SOURCEFORM(FIXED)
+! DIR$ FIXED
 
 !  tcyc:  makes  the cyclic permutation in isospin
 !     1,2,3,...,A --> 2,3,4,...,A,1

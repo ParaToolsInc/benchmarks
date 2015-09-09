@@ -1,5 +1,5 @@
-!IBM* SOURCEFORM(FIXED)
-!DIR$ FIXED
+! IBM* SOURCEFORM(FIXED)
+! DIR$ FIXED
 
 !   unused len --> lenxx to enable len(string) intrinsic
 

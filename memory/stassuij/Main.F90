@@ -43,7 +43,8 @@ complex(8) w1,w2,w3,w4
 complex(8) x1,x2,x3,x4
 complex(8) y1,y2,y3,y4
 
-integer(8) t1,t2,timebase
+!integer(8) t1,t2,timebase,system_clock
+real(8) t1,t2
 
 !$omp parallel private(mythread,nthreads)
     mythread = omp_get_thread_num()
@@ -101,11 +102,13 @@ mss_sign => p_mss_sign
 
 
 ! intialization done
-t1 = timebase()
+!t1 = timebase()
+call CPU_TIME(t1)
 
 call stassuij( k12, cl, cr, v3cuse ) ! k12(in), cl(out),cr(in), v3cuse(in)
 
-t2 = timebase()
+!t2 = timebase()
+call CPU_TIME(t2)
 write( 0,'(A,I18,ES18.10)' ) 'Elapsed time, pclks, s: ', t2 - t1, DBLE( t2 - t1 ) / MHz
 
 write( 0,* ) SUM( cl )

@@ -1,5 +1,5 @@
-!IBM* SOURCEFORM(FIXED)
-!DIR$ FIXED
+! IBM* SOURCEFORM(FIXED)
+! DIR$ FIXED
 
       common /pairs/ fcv(nprs),fcspv(nprs,ncsp),fcppv(nprs,ncpp)           
      &,utv(nprs),usv(nprs),ustv(nprs),utnv(nprs),utntv(nprs)              
