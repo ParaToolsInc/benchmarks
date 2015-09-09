@@ -1,0 +1,9 @@
+!  fscore(l_perm) - product of 1-body s-wave corrs for each permutation
+!                   or 1 if no such core included.      
+      common /pass/ h2m, h2mcsb, pi, drh(3,nprs), drm(nprs),              
+     &   rhdrh(3,ntrsp), rmxrm(3,ntrsp), fr(6,nprs),                      
+     &   fr0(nprs), frpl(nprs), frmn(nprs),                               
+     &   r_part(3,npart), rm_part(npart), rhat_part(3,npart),             
+     &   phi_part(npart, 0:nphi), fscore(ncore_perm),                     
+     &   ils(nprs), ilnps(nqdsp+4,npart), ilnqs(nqdsp+4,npart),           
+     &   ilncore(nqdsp+4,4), il_part(npart)

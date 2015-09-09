@@ -1,0 +1,101 @@
+!  spin-indexing arrays from FBN routines
+!
+! msval(i,n) = spin (+1 or -1) of particle n in spin state i
+! nsexch(i,k) = spin state # on spin exchange of pair k in spin state i
+! nsexch_flip(i,k) = .true. if nsexch points to all spins flipped loc
+! nsexch_sign(i,k) = sign to apply to complex conj if nsexch_flip = .t.
+!        c(exch) = nsexch_sign(i,k) * conj( c( nsexch(i,k) ) )
+! nsflip(i,n) = spin state # on spin flip of particle n in spin state i
+! nsflip_flip(n) = .true. if nsflip points to all spins flipped loc
+!        this happens if and only if n=npart; and then it is true for
+!        all states i.
+! nsflip_sign(i) = sign to apply to complex conj if nsflip_flip = .t.
+!         this is used only for n=npart
+! mss(j,ig,k) - the 4 spin pairs (dd ud du uu) in group ig for pair k
+!               ud means nuc 1 is u, nuc 2 is d
+! mss_flip(k) = .true. if (all) groups for pair k have the du and uu
+!               components with flipped spins
+! mss_sign(ig,k) - the sign to use for the du flipped component if 
+!              mss_flip(k) is true; the uu has the opposite sign
+! msss(j,ig,k) - the 8 spin triples (ddd udd dud ... uuu) in group ig for
+!               triple k
+! msss_flip(k) = .true. if (all) groups for triple k have the last 4
+!               components (ddu ... uuu) with flipped spins
+! msss_sign(ig,k) - the sign to use for the ddu flipped component if 
+!              mss_flip(k) is true; the udd & dud have the opposite 
+!              sign; the uuu has the same sign
+!
+! arrays for making the cyclic permutation in spins
+!     1,2,3,...,A --> 2,3,4,...,A,1
+! nscyc(i), nscyc_sign(i), nscyc_conj(i):  
+!      cyc(i) = nscyc_sign(i)*input(nscyc(i))
+!      if( nscyc_conj(i) )  cyc(i) = conj(cyc(i))
+
+!  3 Oct 99 - m-0 arrays added
+! 30 May 00 - nsexch_all added
+! 29 Jul 04 - nscyc stuff added
+! 12 Apr 08 - real(4), logical(1), big ndrop arrays allocated
+
+      integer, pointer :: nsexch(:,:)       ! (nsp,nprs)
+      integer, pointer :: mss(:,:,:)        ! (4,nsg,nprs)
+      integer, pointer :: msss(:,:,:)       ! (8,nsss+1,ntrsp)
+      integer, pointer :: nsexch_all(:,:)   ! (ns_all+(nsp-ns),nprs)
+
+      common /spin/ msval(ns_all+(nsp-ns),npart), nsflip(nsp,npart),           
+     &   nscyc(ns),                                                            
+     &   nsexch, mss, msss, nsexch_all
+
+      logical(1) :: nsflip_flip, mss_flip, msss_flip, nscyc_conj
+      logical(1), pointer :: nsexch_flip(:,:)       ! (nsp,nprs)
+
+      common /spin_log1/ nsexch_flip, nsflip_flip(npart),                      
+     &    mss_flip(nprs), msss_flip(ntrsp), nscyc_conj(ns)
+
+      real(4) :: flip_sign, nsflip_sign, nscyc_sign 
+      real(4), pointer :: nsexch_sign(:,:)  !  (nsp,nprs)
+      real(4), pointer :: mss_sign(:,:)     !  (nsg,nprs)
+      real(4), pointer :: msss_sign(:,:)    !  (nsss+1,ntrsp)
+
+      common /spin_r4/ flip_sign(ns_all), nsflip_sign(nsp),                    
+     &   nscyc_sign(ns),                                                       
+     &   nsexch_sign, mss_sign, msss_sign
+
+!   size of arrays
+!
+!     size             Mbyes
+!                [log(4),real(8)]
+!                    16n   18n
+! integer(4)
+
+!   ns_all*npart     4.0   18.0    msval
+!   nsp*nprs        15.0   76.5    nsexch
+!   nsp*nprs        15.0   76.5    mss
+!   nsp*npart        2.0    9.0    nsflip
+!   nsp*ntrsp       70.1  408.5    msss
+!   ns_all*nprs     30.0  153.0    nsexch_all
+!   ns                .1     .5    nscyc     
+
+
+! logical
+
+!   nsp*nprs        15.0   76.5    nsexch_flip 
+!   npart             .0     .0    nsflip_flip(npart)
+!   nprs              .0     .0    mss_flip
+!   ns                .1     .5    nscyc_conj
+
+!  real
+
+!   ns_all            .5    2.0    flip_sign
+!   nsp*nprs        30.0  153.0    nsexch_sign
+!   nsp               .3    1.0    nsflip_sign
+!   nsg*nprs         7.5   38.3    mss_sign
+!   nsss*ntrsp      17.5  102.1    msss_sign
+!   ns                .3    1.0    nscyc_sign
+
+!  Total sizes:
+! log(4) real(8)   207.4 1116.4
+! log(1) real(8)   196.1 
+! log(4) real(4)   179.4 
+! log(1) real(4)   168.1  909.9
+
+!  for 12C, total size with log(4) real(8)  is only 6.5 Mbytes

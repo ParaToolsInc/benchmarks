@@ -1,0 +1,16 @@
+!  FBN grid sizes that are independent of nucleus
+      
+!   8 May 98 - numv3c=20
+!  10 Oct 00 - npts = 20480
+
+!!!      parameter( grid_max = 160 ,  hi = 128 , dhi = 32 ) !  large for difuse n-drop
+      integer grid_max
+      real(8) hi, dhi
+      parameter( grid_max =  40 ,  hi = 128 , dhi = 32 ) !  bob's standard
+!!!      parameter( grid_max =  40 ,  hi = 512 , dhi =  8 ) !  dense grid
+!!!      parameter( grid_max =  40 ,  hi = 512 , dhi =  16 ) !  dense grid; small deriv
+      
+      real(8) h, dh
+      integer npts, numv3c
+      parameter ( h = 1./hi, dh = h/dhi, npts = grid_max*hi )
+      parameter( numv3c = 20 )

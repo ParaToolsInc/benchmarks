@@ -1,0 +1,6 @@
+!  this was the fbn /speed/; it has expanded
+!  the _ijk are for tbwaves_ijk
+
+      real(8) flops, secs, flops_ijk, secs_ijk, count_ijk
+      common /speed/ flops, secs, flops_ijk, secs_ijk, count_ijk
+

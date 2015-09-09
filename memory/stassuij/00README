@@ -1,0 +1,70 @@
+This is an OMP scaling benchmark for one of the two major kernels
+of the GFMC application. It is a single-node job without MPI.
+
+The compile options are specified in correspondent Makefile. 
+Lines 3 to 5 should be changed accordingly to specify the Fortran 77 
+and Fortran 90 compilers, as well as the linker command. FFLAGS variable 
+should include aggressive optimization options and the options to 
+recognize OpenMP directives. FNOOPTFLAGS variable should use the least 
+aggressive set of optimization options to prevent optimizing of the 
+timing statements in main program. 
+
+The timing routine should be changed to the one appropriate for 
+a platform. This benchmark uses a low level CPU clock accurate resolution
+timer
+
+integer(8) timebase()
+
+Conversion from CPU cycles to seconds is performed with the help of a 
+conversion coefficient "MHz", defined in Main.F90:4.
+
+Submittion scrips are written for Cobalt scheduler - the standard utility
+used in Argonne Leadership Computing Facility. Upon submission, the number of
+threads should be specified with standard OMP_NUM_THREADS env. variable. 
+The benchmark reports the number of used OpenMP threads, the computation 
+run time, the result of the computation, as well as self verification of the
+result. The typical output for a Blue Gene/Q node was obtained with the 
+provided CheckAll script. Similar results are exepected upon response.
+
+
+Total OMP threads:    1
+Elapsed time, pclks, s:          405918119  2.5369882438E-01
+ -3.59377469438829555
+ -3.59377469438829555
+
+Total OMP threads:    2
+Elapsed time, pclks, s:          204156230  1.2759764375E-01
+ -3.59377469438829555
+ -3.59377469438829555
+
+Total OMP threads:    4
+Elapsed time, pclks, s:          102266372  6.3916482500E-02
+ -3.59377469438829555
+ -3.59377469438829555
+
+Total OMP threads:    8
+Elapsed time, pclks, s:           53134054  3.3208783750E-02
+ -3.59377469438829555
+ -3.59377469438829555
+
+Total OMP threads:   16
+Elapsed time, pclks, s:           28707604  1.7942252500E-02
+ -3.59377469438829555
+ -3.59377469438829555
+
+Total OMP threads:   32
+Elapsed time, pclks, s:           17225196  1.0765747500E-02
+ -3.59377469438829555
+ -3.59377469438829555
+
+Total OMP threads:   64
+Elapsed time, pclks, s:           13910864  8.6942900000E-03
+ -3.59377469438829555
+ -3.59377469438829555
+
+Thank you,
+
+Vitali Morozov
+morozov@anl.gov
+Argonne Leadership Computing Facility
+Argonne IL 60439

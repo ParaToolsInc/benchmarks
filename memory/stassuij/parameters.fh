@@ -1,0 +1,28 @@
+!IBM* SOURCEFORM(FIXED)
+!DIR$ FIXED
+
+!  FBN array dimensions that depend on nucleus
+
+!  3 Oct 99 - m-0 stuff added
+
+      include 'paramnuc.fh'
+      include 'param_m0.fh'
+      include 'ncore.fh'
+
+      integer nprs, ntrs, npprs, ns, nsss, nsp, nppp, ntrsp, nqdsp, nppartp
+      integer npprsp, nx, nxy, nqds, ns_all, nsg
+      parameter(nprs=(npart*(npart-1))/2)
+      parameter(ntrs=(nprs*(npart-2))/3,nqds=(ntrs*(npart-3))/4)
+      parameter(npprs=(nppart*(nppart-1))/2 )
+      parameter( ns = 2**npart/m_0_div, ns_all = 2**npart, nsg = ns/4 )
+      parameter( nsss=ns/8 )
+!!!      parameter( nsp=ns+1, nppp=npart+nprs )
+      parameter( nsp=ns, nppp=npart+nprs )
+      parameter( ntrsp=ntrs+1, nqdsp=nqds+1, nppartp=nppart+1,              
+     &   npprsp=npprs+1 )
+      parameter( nx=6*npart,nxy=9*nppp )
+      
+      logical, parameter ::  m_is_0 = m_0_div .eq. 2 
+
+      include 'fbngrids.fh'
+

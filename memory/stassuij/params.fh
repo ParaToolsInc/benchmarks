@@ -1,0 +1,23 @@
+!IBM* SOURCEFORM(FIXED)
+!DIR$ FIXED
+
+!   unused len --> lenxx to enable len(string) intrinsic
+
+      integer :: oneb_type, twob_type
+      integer :: final_jastrow_type, final_jastrow_sp_l, final_jastrow_l
+      logical :: ndrop, fs_are_one, dospec, do_final_jastrow
+      character(16) fbnpotname
+      common /params/ firstparams
+     &,lpot,lemp,l3bp,lprot,lwf,lsc,l3bc,ljmt,lenxx,lrh,lsm,lnk,lmv,ldum
+     &,esep(4),eta(2),zeta(2),fscal(8),ac(8),aa(8),ar(8)
+     &,alpha(8),beta(8),gamma(8)
+     &,ssu,ssv,ssr,ssa,ssb,ssc,uur,uua
+     &,spu(ncsp),spv(ncsp),spr(ncsp),spa(ncsp),spb(ncsp),spc(ncsp),
+     &   spk(ncsp),spl(ncsp),
+     &   final_jastrow_rhat_off, final_jastrow_cofs(4),
+     &   fbnpotfacs(14),fbnpotname, iunnat, lj, ltotm, lt, oneb_type,
+     &   ndrop, iparity, i_core, num_multi, ncl_cntrl, i_f_debug,
+     &   final_jastrow_type, final_jastrow_sp_l, final_jastrow_l,
+     &   fs_are_one, twob_type, ncore_perm_use, dospec,
+     &   do_final_jastrow,
+     &   lastparams

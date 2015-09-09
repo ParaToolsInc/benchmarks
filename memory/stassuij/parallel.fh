@@ -1,0 +1,11 @@
+!IBM* SOURCEFORM(FIXED)
+!DIR$ FIXED
+
+      character*12 name
+      logical master, slave, short_messages, log_node
+      integer :: app_comm
+      logical prop_slave, work_slave
+      common /parallel/ myid, master, slave, num_slaves, num_thread,          
+     &   app_comm, prop_slave, work_slave,                                    
+     &   short_messages, log_node, name
+

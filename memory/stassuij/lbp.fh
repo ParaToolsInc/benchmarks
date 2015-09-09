@@ -1,0 +1,11 @@
+!  FBN isospin mapping arrays.      
+      
+!IBM* SOURCEFORM(FIXED)
+!DIR$ FIXED
+
+      common /lbp/ n1p(nprs),n2p(nprs),k12p(npart,npart)                      
+     &,n1t(ntrsp),n2t(ntrsp),n3t(ntrsp),k123t(npart,npart,npart),             
+     &   nsc(ncore,ncore_perm), npc(nppart+1,ncore_perm),                     
+     &   kssp(ncore_prs,ncore_perm),                                          
+     &   kspp(ncore,nppartp,ncore_perm), kppp(npprsp,ncore_perm),             
+     &   nex(ncore_perm)

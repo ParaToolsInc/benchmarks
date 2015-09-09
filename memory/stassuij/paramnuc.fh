@@ -1,0 +1,13 @@
+!  A=12, T=0: 12C  Normal parity - 6 states, probably simp[444] + 5-Joe-pstates
+
+      integer npart, nt, nppart, nps, nbeta, nphi, ncsp, ncpp
+      parameter( npart=12, nt=132, nppart=8, nps= 14 )
+      parameter( nbeta = 6 , nphi = 4*1+1 )
+      parameter( ncsp = 3*1+1 , ncpp = 3*1+1 )
+
+      logical, parameter :: do_multi_phi = .false.
+      
+      integer nsta0, nsc0, nortab_dim, nucl_num_comp
+      parameter ( nsta0 = 1 , nsc0 = 1, nortab_dim = 1 )
+      parameter( nucl_num_comp=113 )
+

@@ -1,0 +1,10 @@
+!  interpolated Vijk radial forms for all pairs
+
+      common /tbodyc/ v3psv(nprs),v3ptv(nprs),v3puv(nprs),v3pvv(nprs)         
+     &,v3pwv(nprs),v3pxv(nprs),v3pyv(nprs),v3pzv(nprs)                        
+     &,f3bs(nprs),f3bt(nprs),f3bb(nprs)                                       
+     &,u3psv(nprs),u3ptv(nprs),u3puv(nprs),u3pvv(nprs)                        
+     &,u3pwv(nprs),u3pxv(nprs),u3pyv(nprs),u3pzv(nprs)                        
+     &,u3fpv(nprs),u3lsv(nprs)                                                
+     &,u3pw2v(nprs),u3pw3v(nprs),u3pz2piv(npts), u3pt32v(nprs),               
+     &   u3pt32_rv(nprs)

@@ -1,0 +1,21 @@
+!  FBN isospin mapping arrays.      
+      
+!IBM* SOURCEFORM(FIXED)
+!DIR$ FIXED
+
+!  tcyc:  makes  the cyclic permutation in isospin
+!     1,2,3,...,A --> 2,3,4,...,A,1
+
+      real(8) tstate, taus, tprot, tneut, tdott, tzptz, t12, tnn, tnp, tpp
+      real(8) tdtxt, proj3_t32, tcyc
+      integer ntstate_2, ntauz, ntdott, ntzpzt, nt12, ntnn, ntnp, ntpp, ntdtxt, ntneut, ntprot, num_proj3_t32
+      common /ispin/ tstate(ns_all+(nsp-ns),nt),                               
+     &   tauz(nt,nt,npart), tprot(nt,nt,npart), tneut(nt,nt,npart),            
+     &   tdott(nt,nt,nprs), tzptz(nt,nt,nprs), t12(nt,nt,nprs),                
+     &   tnn(nt,nt,nprs), tnp(nt,nt,nprs), tpp(nt,nt,nprs),                    
+     &   tdtxt(nt,nt,ntrsp),                                                   
+     &   proj3_t32(nt,nt,ntrs), tcyc(nt,nt),                                   
+     &   ntstate_2, ntauz(npart), ntdott(nprs), ntzptz(nprs),                  
+     &   nt12(nprs), ntnn(nprs), ntnp(nprs), ntpp(nprs), ntdtxt(ntrsp),        
+     &   ntneut(nprs), ntprot(nprs),                                           
+     &   num_proj3_t32(ntrsp)

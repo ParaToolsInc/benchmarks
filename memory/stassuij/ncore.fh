@@ -1,0 +1,20 @@
+!  parameters for permutations of the core with other nucleons
+
+      integer ncore, ncore_prs, np_prs
+      parameter ( ncore = npart-nppart )
+      parameter ( ncore_prs = (ncore*(ncore-1))/2 )
+      parameter ( np_prs = (nppart*(nppart-1))/2 )
+
+!  beyond 18 we will have to start using quad precision
+!  perhaps integer*8 would be better anyway?
+
+      real*8, parameter :: factorials(0:18) = (/                              
+     &   1d0, 1d0, 2d0, 6d0, 24d0, 120d0, 720d0, 5040d0, 40320d0,             
+     &   362880d0, 3628800d0, 39916800d0, 479001600d0,                        
+     &   6227020800d0, 87178291200d0, 1307674368000d0, 20922789888000d0,      
+     &   355687428096000d0, 6402373705728000d0                                
+     &   /)
+
+      integer ncore_perm
+      parameter ( ncore_perm =                                                
+     &   factorials(npart)/(factorials(nppart)*factorials(ncore)) )

@@ -1,0 +1,17 @@
+#!/bin/bash -x
+
+export PROG=stassuij
+export NODES=1
+export RANKS_PER_NODE=1
+export OMP_NUM_THREADS=2
+export OMP_WAIT_POLICY=ACTIVE
+export BG_SMP_FAST_WAKEUP=YES
+
+export NPROCS=$((NODES*RANKS_PER_NODE)) 
+export OUTPUT=GFMCmk_stassuij_${OMP_NUM_THREADS}
+
+rm -f core.* ${OUTPUT}.cobaltlog ${OUTPUT}.error ${OUTPUT}.output
+
+qsub -A Performance -n $NODES --mode c${RANKS_PER_NODE} -t 0:10:00 --env BG_SHAREDMEMSIZE=32:OMP_NUM_THREADS=${OMP_NUM_THREADS}:OMP_WAIT_POLICY=${OMP_WAIT_POLICY}:BG_SMP_FAST_WAKEUP=${BG_SMP_FAST_WAKEUP} -O $OUTPUT $PROG 
+
+
