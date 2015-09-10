@@ -4,8 +4,8 @@ FF = ifort
 F90 = ifort
 LD  = ifort
 
-FFLAGS = -O3 -xHost -ipo -extend-source -openmp
-FNOOPTFLAGS = $(FCOMMON) -O2 -openmp
+FFLAGS = -O3 -xHost -ipo -extend-source -openmp -g
+FNOOPTFLAGS = $(FCOMMON) -O2 -openmp -g
 
 LDFLAGS = $(FNOOPTFLAGS)
 
