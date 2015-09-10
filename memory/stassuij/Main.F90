@@ -4,8 +4,8 @@ implicit none
 real(8), parameter :: MHz = 1600d6 ! CPU frequency, consistent with timebase() function
 
 integer, parameter :: npart = 12, ntrs=220, ncsp = 4, ncpp = 4, ns = 2048, ns_all = 4096
-!integer, parameter :: numv3c = 20, nsp = 2048, nt = 132, nprs = 66, ntrsp = 221, nsg = 512
-integer, parameter :: numv3c = 20, nsp = 20480, nt = 1320, nprs = 66, ntrsp = 221, nsg = 512
+integer, parameter :: numv3c = 20, nsp = 2048, nt = 132, nprs = 66, ntrsp = 221, nsg = 512
+!integer, parameter :: numv3c = 20, nsp = 20480, nt = 1320, nprs = 66, ntrsp = 221, nsg = 512
 
 real(8) h2m, h2mcsb, pi, drh, drm,rhdrh, rmxrm, fr
 common /pass/ h2m, h2mcsb, pi, drh(3,nprs), drm(nprs),rhdrh(3,ntrsp), rmxrm(3,ntrsp), fr(6,nprs)
@@ -44,8 +44,8 @@ complex(8) w1,w2,w3,w4
 complex(8) x1,x2,x3,x4
 complex(8) y1,y2,y3,y4
 
-!integer(8) t1,t2,timebase,system_clock
-real(8) t1,t2
+integer(8) t1,t2,timebase,time_rate
+!real(8) t1,t2
 
 !$omp parallel private(mythread,nthreads)
     mythread = omp_get_thread_num()
@@ -104,13 +104,16 @@ mss_sign => p_mss_sign
 
 ! intialization done
 !t1 = timebase()
-call CPU_TIME(t1)
+!call CPU_TIME(t1)
+call system_clock(t1,time_rate)
 
 call stassuij( k12, cl, cr, v3cuse ) ! k12(in), cl(out),cr(in), v3cuse(in)
 
 !t2 = timebase()
-call CPU_TIME(t2)
-write( 0,'(A,I18,ES18.10)' ) 'Elapsed time, pclks, s: ', t2 - t1, DBLE( t2 - t1 ) / MHz
+!call CPU_TIME(t2)
+call system_clock(t2)
+!write( 0,'(A,I18,ES18.10)' ) 'Elapsed time, pclks, s: ', t2 - t1, DBLE( t2 - t1 ) / MHz
+write( 0,'(A,I18,I18,ES18.10)' ) 'Elapsed cpu ticks, ticks/cycle, s: ', t2 - t1, time_rate, DBLE( t2 - t1 ) / time_rate
 
 write( 0,* ) SUM( cl )
 write( 0,* ) '-3.59377469438829555'
