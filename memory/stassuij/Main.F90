@@ -107,7 +107,9 @@ mss_sign => p_mss_sign
 !call CPU_TIME(t1)
 call system_clock(t1,time_rate)
 
+do i=1,10000
 call stassuij( k12, cl, cr, v3cuse ) ! k12(in), cl(out),cr(in), v3cuse(in)
+enddo
 
 !t2 = timebase()
 !call CPU_TIME(t2)
