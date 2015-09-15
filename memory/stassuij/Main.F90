@@ -11,7 +11,8 @@ real(8) h2m, h2mcsb, pi, drh, drm,rhdrh, rmxrm, fr
 common /pass/ h2m, h2mcsb, pi, drh(3,nprs), drm(nprs),rhdrh(3,ntrsp), rmxrm(3,ntrsp), fr(6,nprs)
 
 real(8) fcv,fcspv,fcppv,utv,usv,ustv,utnv,utntv,ulsv,ulstv
-common /pairs/ fcv(nprs),fcspv(nprs,ncsp),fcppv(nprs,ncpp),utv(nprs),usv(nprs),ustv(nprs),utnv(nprs),utntv(nprs),ulsv(nprs),ulstv(nprs)
+common /pairs/ fcv(nprs),fcspv(nprs,ncsp),fcppv(nprs,ncpp),utv(nprs),usv(nprs), &
+		ustv(nprs),utnv(nprs),utntv(nprs),ulsv(nprs),ulstv(nprs)
 
 real(8) tstate, tauz, tprot, tneut, tdott, tzptz, t12, tnn, tnp, tpp
 common /ispin/ tstate(ns_all+(nsp-ns),nt),tauz(nt,nt,npart), tprot(nt,nt,npart), tneut(nt,nt,npart),tdott(nt,nt,nprs)

@@ -4,8 +4,8 @@ FF = gfortran
 F90 = gfortran
 LD  = gfortran
 
-FFLAGS = -O3  -fopenmp -g
-FNOOPTFLAGS = $(FCOMMON) -O2 -fopenmp -g
+FFLAGS = -O3  -fopenmp -g -ffixed-line-length-none
+FNOOPTFLAGS = $(FCOMMON) -O2 -fopenmp -g 
 
 LDFLAGS = $(FNOOPTFLAGS)
 
