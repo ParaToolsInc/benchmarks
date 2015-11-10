@@ -13,7 +13,7 @@ LDFLAGS = $(FNOOPTFLAGS)
 
 OBJS = Main.o stassuij.o stassterms.o
 
-all: stassuij
+all: stassuij.intel
 
 Main.o: Main.F90
 	$(F90) $(FNOOPTFLAGS) -c -o Main.o Main.F90
@@ -36,8 +36,8 @@ stassterms.o: stassterms.f90
 %.o: %.c
 	$(CC) -c -o $@ $<
 
-stassuij: $(OBJS)
-	$(LD) $(LDFLAGS) -o stassuij $(OBJS) $(LIBS)
+stassuij.intel: $(OBJS)
+	$(LD) $(LDFLAGS) -o stassuij.intel.exe $(OBJS) $(LIBS)
 
 clean:
 	rm -f temp* *.d *.o *.mod stassuij *.lst FMain.f
