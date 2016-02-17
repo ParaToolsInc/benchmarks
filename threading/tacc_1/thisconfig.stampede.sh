@@ -1,7 +1,5 @@
 rm -rf CMakeCache.txt CmakeFiles
 
-module load cmake/3.1.0
-module load cxx11/4.9.1
 cmake \
   -DCMAKE_CXX_COMPILER:FILEPATH=icpc \
   -DCMAKE_C_COMPILER:FILEPATH=icc \
