@@ -1,0 +1,26 @@
+joao compilation of psum.cpp: (2/16/16):
+icpc -openmp -O3 -std=c++11 -I/opt/intel/tbb/include -L/opt/intel/tbb/lib/intel64/gcc4.4/ -o psum psum.cpp  -lpthread -ltbb -ltbbmalloc -ltbbmalloc_proxy
+
+* problem with having all code in one executable:
+1) warming up registers with lower count threads gives advantage to higher count
+2) very hard to profile per thread because of aggrigate action per iteration
+
+
+TODO:
+
+1)seperate code into different parallelism methods
+2)make code take argument of thread count
+3)insert ifdefs to TAU timers (start/stops)
+4)write script to run each executable 100 times for each thread count to get times to std out
+  => distribution
+
+want to show
+
+a)all thread counts in single executable is biased
+b)need a distribution of times in std out
+c) use tau to answer why
+   1)fastest (thread count AND thread mechanism) is the fastest by showing
+     slowest's cache misses and vectorization slowdown
+   2)
+
+
