@@ -2,6 +2,7 @@
 #include <inttypes.h>
 #include <future>
 #include <vector>
+#include <thread>
 
 
 #define NFRAMES 500
@@ -59,3 +60,4 @@ int main(int a, char **b) {
   }
 
 }
+
