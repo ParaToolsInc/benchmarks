@@ -25,7 +25,10 @@ int main(int a, char **b) {
   int *bufs[NUMBUF];
   int NCORES[] = { 1, 2, 4, 8, 16, 20, 30, 40, 50 };
 
-
+  for (int i = 0; i < NUMBUF; i++) {
+    bufs[i] = new int[BUFSIZE];
+    for (int j = 0; j < BUFSIZE; j++) bufs[i][j] = i;
+  }
 
   for (int jj = 0; jj < sizeof(NCORES) / sizeof(int); jj++) {
     int nc = NCORES[jj];
