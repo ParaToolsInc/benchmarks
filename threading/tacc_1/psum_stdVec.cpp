@@ -21,17 +21,25 @@ __inline__ tic tsc() {
   return ((tic)hi << 32 | lo);
 }
 
-int main(int a, char **b) {
+//int main(int a, char **b) {
+//int main(int a, char **b,int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
   int *bufs[NUMBUF];
-  int NCORES[] = { 1, 2, 4, 8, 16, 20, 30, 40, 50 };
+  //int NCORES[] = { 1, 2, 4, 8, 16, 20, 30, 40, 50 };
+  int NCORES = 1 ;
+
+  if (argv[1]!=NULL) {
+    NCORES = atoi(argv[1]);
+  }
+
+
 
   for (int i = 0; i < NUMBUF; i++) {
     bufs[i] = new int[BUFSIZE];
     for (int j = 0; j < BUFSIZE; j++) bufs[i][j] = i;
   }
 
-  for (int jj = 0; jj < sizeof(NCORES) / sizeof(int); jj++) {
-    int nc = NCORES[jj];
+    int nc = NCORES;
 
     tic t0 = tsc();
 
@@ -60,7 +68,7 @@ int main(int a, char **b) {
 
     tic ttics = tsc() - t0;
     std::cout << "std::async " << nc << " " << ttics / (2.8 * 1000000000.0) << "\n";
-  }
+  
 
 }
 
