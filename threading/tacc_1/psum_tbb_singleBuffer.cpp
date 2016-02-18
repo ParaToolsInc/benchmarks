@@ -27,9 +27,13 @@ __inline__ tic tsc() {
   return ((tic)hi << 32 | lo);
 }
 
-int main(int a, char **b) {
+int main(int argc, char* argv[]) {
   int *bufs[NUMBUF];
-  int NCORES[] = { 1, 2, 4, 8, 16, 20, 30, 40, 50 };
+  int NCORES = 1 ;
+
+  if (argv[1]!=NULL) {
+    NCORES = atoi(argv[1]);
+  }
 
   for (int i = 0; i < NUMBUF; i++) {
     bufs[i] = new int[BUFSIZE];
@@ -37,9 +41,7 @@ int main(int a, char **b) {
   }
 
 
-  for (int jj = 0; jj < sizeof(NCORES) / sizeof(int); jj++) {
-    //  omp_set_num_threads(NCORES[jj]);
-    tbb::task_scheduler_init init(NCORES[jj]);
+    tbb::task_scheduler_init init(NCORES);
     tic t0 = tsc();
 
     int *a = bufs[0];
@@ -54,7 +56,7 @@ int main(int a, char **b) {
       }
 
     tic ttics = tsc() - t0;
-    std::cout << "tbb single buffer " << NCORES[jj] << ": " << ttics / (2.8 * 1000000000.0) << "\n";
-  }
+    std::cout << "tbb single buffer " << NCORES << ": " << ttics / (2.8 * 1000000000.0) << "\n";
+
 
 }

@@ -21,11 +21,8 @@ __inline__ tic tsc() {
   return ((tic)hi << 32 | lo);
 }
 
-//int main(int a, char **b) {
-//int main(int a, char **b,int argc, char* argv[]) {
 int main(int argc, char* argv[]) {
   int *bufs[NUMBUF];
-  //int NCORES[] = { 1, 2, 4, 8, 16, 20, 30, 40, 50 };
   int NCORES = 1 ;
 
   if (argv[1]!=NULL) {
@@ -68,7 +65,7 @@ int main(int argc, char* argv[]) {
 
     tic ttics = tsc() - t0;
     std::cout << "std::async " << nc << " " << ttics / (2.8 * 1000000000.0) << "\n";
-  
+
 
 }
 
