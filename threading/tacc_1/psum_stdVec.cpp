@@ -1,8 +1,8 @@
 #include <iostream>
-#include <inttypes.h>
 #include <future>
 #include <vector>
 #include <thread>
+#include <chrono>
 
 
 #define NFRAMES 500
@@ -13,15 +13,11 @@
 // to compare timing.  The reported results should be divided by the CPU frequency
 // to get wall time.
 
-typedef uint64_t tic;
 
-__inline__ tic tsc() {
-  tic lo, hi;
-  __asm__ __volatile__("rdtsc" : "=a"(lo), "=d"(hi));
-  return ((tic)hi << 32 | lo);
-}
 
 int main(int argc, char* argv[]) {
+  using namespace std::chrono;
+
   int *bufs[NUMBUF];
   int NCORES = 1 ;
 
@@ -38,8 +34,7 @@ int main(int argc, char* argv[]) {
 
     int nc = NCORES;
 
-    tic t0 = tsc();
-
+   high_resolution_clock::time_point t1 = high_resolution_clock::now();
     for (int i = 0; i < NFRAMES; i++) {
       int nchunks = nc;
       int chunk_size = BUFSIZE / nchunks;
@@ -62,9 +57,9 @@ int main(int argc, char* argv[]) {
 
       for (std::future<void> &f : futures) f.wait();
     }
-
-    tic ttics = tsc() - t0;
-    std::cout << "std::async " << nc << " " << ttics / (2.8 * 1000000000.0) << "\n";
+   high_resolution_clock::time_point t2 = high_resolution_clock::now();
+   duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "std::async " << nc << " " <<  time_span.count() << " seconds. \n";
 
 
 }

@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <future>
 #include <iostream>
-#include <omp.h>
 #include <thread>
 
 #include <tbb/blocked_range.h>
@@ -15,19 +14,10 @@
 #define BUFSIZE 1920 * 1080 * 3
 #define NUMBUF 16
 
-// The following is a little code to reaad the TSC - it provides a very high resultion way
-// to compare timing.  The reported results should be divided by the CPU frequency
-// to get wall time.
-
-typedef uint64_t tic;
-
-__inline__ tic tsc() {
-  tic lo, hi;
-  __asm__ __volatile__("rdtsc" : "=a"(lo), "=d"(hi));
-  return ((tic)hi << 32 | lo);
-}
 
 int main(int argc, char* argv[]) {
+  using namespace std::chrono;
+
   int *bufs[NUMBUF];
   int NCORES = 1 ;
 
@@ -43,7 +33,8 @@ int main(int argc, char* argv[]) {
 
 
     tbb::task_scheduler_init init(NCORES);
-    tic t0 = tsc();
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+
     int *a = bufs[0];
     for (int i = 0; i < NFRAMES; i++)
       tbb::parallel_for(tbb::blocked_range<size_t>(0, BUFSIZE), [&](const tbb::blocked_range<size_t> &range) {
@@ -55,7 +46,8 @@ int main(int argc, char* argv[]) {
         }
       });
 
-    tic ttics = tsc() - t0;
-    std::cout << "tbb rank buffer " << NCORES<< ": " << ttics / (2.8 * 1000000000.0) << "\n";
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "tbb rank buffer " << NCORES<< ": " << time_span.count() << " seconds.\n";
 
 }
