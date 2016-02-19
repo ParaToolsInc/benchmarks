@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include <inttypes.h>
 
 
@@ -19,6 +20,7 @@ __inline__ tic tsc() {
 }
 
 int main(int a, char **b) {
+  using namespace std::chrono;
   int *bufs[NUMBUF];
 
 
@@ -28,8 +30,8 @@ int main(int a, char **b) {
   }
 
   {
-    tic t0 = tsc();
-
+   // tic t0 = tsc();
+   high_resolution_clock::time_point t1 = high_resolution_clock::now();
     for (int i = 0; i < NFRAMES; i++)
       for (int j = 1; j < NUMBUF; j++) {
         int *a = bufs[0];
@@ -37,8 +39,11 @@ int main(int a, char **b) {
         for (int k = 0; k < BUFSIZE; k++) *a++ += *b++;
       }
 
-    tic ttics = tsc() - t0;
-    std::cout << "non-parallel " << ttics / (2.8 * 1000000000.0) << "\n";
+ //   tic ttics = tsc() - t0;
+   high_resolution_clock::time_point t2 = high_resolution_clock::now();
+   duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+    //std::cout << "non-parallel " << ttics / (2.8 * 1000000000.0) << "\n";
+    std::cout << "non-parallel " << time_span.count() << " seconds.\n";
   }
 
 }
