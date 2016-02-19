@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 2.8)
 project (PSUM)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
@@ -15,7 +15,10 @@ add_executable(psum_tbb_singleBuffer psum_tbb_singleBuffer.cpp)
 add_executable(psum_tbb_rankBuffer psum_tbb_rankBuffer.cpp)
 add_executable(psum psum.cpp)
 
+set_target_properties( psum_serial PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -std=c++11")
+
 target_link_libraries(psum_stdVec -pthread)
+set_target_properties(psum_stdVec PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11")
 
 target_include_directories (psum_tbb_singleBuffer PUBLIC ${TBB_INCLUDE_DIRS})
 target_include_directories (psum_tbb_rankBuffer PUBLIC ${TBB_INCLUDE_DIRS})

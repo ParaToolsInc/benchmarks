@@ -6,10 +6,6 @@
 #define BUFSIZE 1920 * 1080 * 3
 #define NUMBUF 16
 
-// The following is a little code to reaad the TSC - it provides a very high resultion way
-// to compare timing.  The reported results should be divided by the CPU frequency
-// to get wall time.
-
 
 int main(int a, char **b) {
   using namespace std::chrono;
