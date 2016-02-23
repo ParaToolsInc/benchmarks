@@ -27,10 +27,10 @@ machine=p.split('.')[1].strip('\n')
 
 
 def main():
-  parser = argparse.ArgumentParser(description='Run all the psum tests on Stampede or Maverick. '\
-                                                'calculate averages and standard deviations.'\
-                                                ' Also, a histogram will be generated for each type and thread count.'\
-                                                '  We also will produce a line plot for the avg. per type vs. thread count')
+  parser = argparse.ArgumentParser(description='Run all the psum tests on Stampede or Maverick. ')#\
+#                                                'calculate averages and standard deviations.'\
+#                                                ' Also, a histogram will be generated for each type and thread count.'\
+#                                                '  We also will produce a line plot for the avg. per type vs. thread count')
   args = parser.parse_args()
 
   currentDir=os.getcwd()
