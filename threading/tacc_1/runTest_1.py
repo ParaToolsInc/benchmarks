@@ -40,7 +40,7 @@ def main():
       fileName= machine + '_' + test
       cmdLine = 'psum_' + test + ' 2>&1 >> ' + fileName
       print cmdLine
-      for range(0,100):
+      for i in range(0,100):
         errorMessage = " Error running: " + cmdLine
         shellCommand(cmdLine,errorMessage)
     else:
@@ -48,7 +48,7 @@ def main():
         fileName= machine + '_' + test + '_' + str(thread) + '.txt'
         cmdLine = 'psum_' + test + ' ' + str(thread) + ' 2>&1 >> ' + fileName
         print cmdLine
-        for range(0,100):
+        for i in range(0,100):
           errorMessage = " Error running: " + cmdLine
           shellCommand(cmdLine,errorMessage)
 
