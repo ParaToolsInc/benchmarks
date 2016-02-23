@@ -23,7 +23,7 @@ threadCount=[1,2,4,8,10,12,14,16,18,19,20,25,30,35,40]
 
 
 p=subprocess.check_output('hostname')
-machine=p.split('.')[1]
+machine=p.split('.')[1].strip('\n')
 
 
 def main():
@@ -36,7 +36,19 @@ def main():
   currentDir=os.getcwd()
 
   for test in testList:
-    print test
+    if test == 'serial':
+      fileName= machine + '_' + test
+      cmdLine = 'psum_' + test + ' 2>&1 > ' + fileName
+      print cmdLine
+      errorMessage = " Error running: " + cmdLine
+      shellCommand(cmdLine,errorMessage)
+    else:
+      for thread in threadCount:
+        fileName= machine + '_' + test + '_' + str(thread) + '.txt'
+        cmdLine = 'psum_' + test + ' ' + str(thread) + ' 2>&1 > ' + fileName
+        print cmdLine
+        errorMessage = " Error running: " + cmdLine
+        shellCommand(cmdLine,errorMessage)
 
 
 if __name__ == "__main__":
