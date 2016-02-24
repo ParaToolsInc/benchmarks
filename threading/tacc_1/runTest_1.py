@@ -20,7 +20,8 @@ def shellCommand(command,errorMessage):
 
 #testList=['serial','openmp','openmp_2','tbb_rankBuffer','tbb_singleBuffer']
 testList=['tbb_rankBuffer','tbb_singleBuffer']
-threadCount=[1,2,4,8,10,12,14,16,18,19,20,25,30,35,40]
+#threadCount=[1,2,4,8,10,12,14,16,18,19,20,25,30,35,40]
+threadCount=[2,4,8,10,12,14,16,18,19,20,25,30,35,40]
 
 
 p=subprocess.check_output('hostname')
