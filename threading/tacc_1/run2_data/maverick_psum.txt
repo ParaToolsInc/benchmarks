@@ -1,0 +1,41 @@
+TACC: Starting up job 412831
+TACC: Starting parallel tasks...
+non-parallel 33.4179
+std::async 1 50.6114
+std::async 2 26.6924
+std::async 4 14.3336
+std::async 8 7.71073
+std::async 16 5.05978
+std::async 20 5.05513
+std::async 30 5.4361
+std::async 40 5.88241
+std::async 50 5.49272
+openmp 1: 35.9722
+openmp 2: 14.1414
+openmp 4: 7.77101
+openmp 8: 5.17919
+openmp 16: 4.78412
+openmp 20: 7.30815
+openmp 30: 6.16085
+openmp 40: 6.22721
+openmp 50: 6.62256
+tbb single buffer 1: 50.7738
+tbb single buffer 2: 21.097
+tbb single buffer 4: 11.9831
+tbb single buffer 8: 8.7403
+tbb single buffer 16: 8.73432
+tbb single buffer 20: 8.81556
+tbb single buffer 30: 9.05478
+tbb single buffer 40: 9.65241
+tbb single buffer 50: 11.1225
+tbb rank buffer 1: 95.4777
+tbb rank buffer 2: 48.3677
+tbb rank buffer 4: 24.9687
+tbb rank buffer 8: 13.329
+tbb rank buffer 16: 7.11691
+tbb rank buffer 20: 5.80296
+tbb rank buffer 30: 6.16147
+tbb rank buffer 40: 6.6992
+tbb rank buffer 50: 7.13157
+ 
+TACC: Shutdown complete. Exiting.
