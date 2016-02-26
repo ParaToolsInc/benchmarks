@@ -13,7 +13,9 @@
 // to compare timing.  The reported results should be divided by the CPU frequency
 // to get wall time.
 
-
+#ifdef TAU_ENABLED
+#include <TAU.h>
+#endif
 
 int main(int argc, char* argv[]) {
   using namespace std::chrono;
@@ -39,8 +41,14 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < NFRAMES; i++)
       for (int j = 1; j < NUMBUF; j++) {
         int *b = bufs[j];
+#ifdef TAU_ENABLED
+   TAU_START("inner for loop");
+#endif
 #pragma omp parallel for
         for (int k = 0; k < BUFSIZE; k++) a[k] += b[k];
+#ifdef TAU_ENABLED
+   TAU_STOP("inner for loop");
+#endif
       }
      high_resolution_clock::time_point t2 = high_resolution_clock::now();
      duration<double> time_span = duration_cast<duration<double>>(t2 - t1);

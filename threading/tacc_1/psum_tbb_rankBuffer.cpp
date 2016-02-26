@@ -14,6 +14,9 @@
 #define BUFSIZE 1920 * 1080 * 3
 #define NUMBUF 16
 
+#ifdef TAU_ENABLED
+#include <TAU.h>
+#endif
 
 int main(int argc, char* argv[]) {
   using namespace std::chrono;
@@ -41,7 +44,13 @@ int main(int argc, char* argv[]) {
         for (int k = range.begin(); k != range.end(); ++k) {
           for (int j = 1; j < NUMBUF; j++) {
             int *b = bufs[j];
+#ifdef TAU_ENABLED
+      TAU_START("inner for loop (a += b)");
+#endif
             a[k] += b[k];
+#ifdef TAU_ENABLED
+      TAU_STOP("inner for loop (a += b)");
+#endif
           }
         }
       });
