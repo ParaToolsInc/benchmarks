@@ -20,6 +20,10 @@
 int main(int argc, char* argv[]) {
   using namespace std::chrono;
 
+#ifdef TAU_ENABLED
+TAU_PROFILE_SET_NODE(0)
+#endif
+
   int *bufs[NUMBUF];
   int NCORES = 1 ;
 
@@ -38,6 +42,9 @@ int main(int argc, char* argv[]) {
     omp_set_num_threads(NCORES);
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     int *a = bufs[0];
+#ifdef TAU_ENABLED
+   TAU_START("Outter for loop");
+#endif
     for (int i = 0; i < NFRAMES; i++)
       for (int j = 1; j < NUMBUF; j++) {
         int *b = bufs[j];
@@ -50,6 +57,9 @@ int main(int argc, char* argv[]) {
    TAU_STOP("inner for loop");
 #endif
       }
+#ifdef TAU_ENABLED
+   TAU_STOP("Outter for loop");
+#endif
      high_resolution_clock::time_point t2 = high_resolution_clock::now();
      duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
      std::cout << "openmp " << NCORES << ": " << time_span.count() << " seconds.\n";
