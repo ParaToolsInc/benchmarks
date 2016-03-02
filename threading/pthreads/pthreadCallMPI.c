@@ -2,6 +2,8 @@
  * Each processor will have 2 threads. Each processor's one thread will be sending data to other processors and the other thread will be receiving data from other processors. When I am implementing it, it is giving segmentation fault error with some messages like "current bytes -40, total bytes 0, remote id 5"
  */
 
+// obtained from stack overflow: http://stackoverflow.com/questions/16661888/calling-mpi-functions-from-multiple-threads
+
 
 int rank, size, msg_num;
 
