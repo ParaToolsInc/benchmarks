@@ -3,7 +3,10 @@
  */
 
 // obtained from stack overflow: http://stackoverflow.com/questions/16661888/calling-mpi-functions-from-multiple-threads
+#include <stdlib.h>
+#include <mpi.h>
 
+using namespace std;
 
 int rank, size, msg_num;
 
@@ -15,7 +18,7 @@ void *Send_Func_For_Thread(void *arg)
 
     for(x=0; x < msg_num; x++)
     {
-        procnum = rand()%size;
+        procnum = rand() % size;
         if(procnum != rank)
             MPI_Send(&send, 1, MPI_INT, procnum, 0, MPI_COMM_WORLD);
     }
