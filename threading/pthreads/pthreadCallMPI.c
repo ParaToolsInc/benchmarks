@@ -58,7 +58,9 @@ int main(int argc, char **argv)
     void *stat;
     pthread_attr_t attr;
     pthread_t thread[2];
-
+#ifdef __USE_TAU
+    TAU_PROFILE("main","", TAU_DEFAULT);
+#endif
     //MPI_Init(&argc, &argv);
     int provided;
     MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
