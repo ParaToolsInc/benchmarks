@@ -20,6 +20,9 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef __USE_TAU
+#include <TAU.h>
+#endif
 
 /*   
  *   The following structure contains the necessary information to allow the 
@@ -109,6 +112,10 @@ long i;
 double *a, *b;
 void *status;
 pthread_attr_t attr;
+
+#ifdef __USE_TAU
+TAU_PROFILE("main","",TAU_DEFAULT);
+#endif
 
 /* Assign storage and initialize values */
 a = (double*) malloc (MAXTHRDS*VECLEN*sizeof(double));
