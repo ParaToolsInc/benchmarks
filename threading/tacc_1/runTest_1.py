@@ -18,10 +18,10 @@ def shellCommand(command,errorMessage):
     pass
   return
 
-#testList=['serial','openmp','openmp-2','tbb_rankBuffer','tbb_singleBuffer']
-testList=['tbb_rankBuffer','tbb_singleBuffer']
+#testList=['serial','openmp','openmp-2','tbb_rankBuffer','tbb_singleBuffer','tbb_partitionBuffer']
+testList=['tbb_partitionBuffer']
 #threadCount=[1,2,4,8,10,12,14,16,18,19,20,25,30,35,40]
-threadCount=[1]
+threadCount=[18,19,20,25,30,35,40]
 
 
 p=subprocess.check_output('hostname')
