@@ -14,6 +14,7 @@ add_executable(psum_openmp psum_openmp.cpp)
 add_executable(psum_openmp_2 psum_openmp_2.cpp)
 add_executable(psum_tbb_singleBuffer psum_tbb_singleBuffer.cpp)
 add_executable(psum_tbb_rankBuffer psum_tbb_rankBuffer.cpp)
+add_executable(psum_tbb_partitionBuffer psum_tbb_partitionBuffer.cpp)
 add_executable(psum psum.cpp)
 
 set_target_properties( psum_serial PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS}  -O3 -std=c++11")
@@ -22,7 +23,7 @@ target_link_libraries(psum_stdVec -pthread)
 set_target_properties(psum_stdVec PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11")
 
 target_include_directories (psum_tbb_singleBuffer PUBLIC ${TBB_INCLUDE_DIRS})
-target_include_directories (psum_tbb_rankBuffer PUBLIC ${TBB_INCLUDE_DIRS})
+target_include_directories (psum_tbb_partitionBuffer PUBLIC ${TBB_INCLUDE_DIRS})
 
 target_link_libraries(psum ${TBB_LIBRARY} -openmp -pthread)
 set_target_properties( psum PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -openmp -O3 -std=c++11")
@@ -38,6 +39,9 @@ set_target_properties( psum_tbb_singleBuffer PROPERTIES COMPILE_FLAGS "${CMAKE_C
 
 target_link_libraries(psum_tbb_rankBuffer  ${TBB_LIBRARY} )
 set_target_properties( psum_tbb_rankBuffer PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11")
+
+target_link_libraries(psum_tbb_partitionBuffer  ${TBB_LIBRARY} )
+set_target_properties( psum_tbb_partitionBuffer PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11")
 
 
 
