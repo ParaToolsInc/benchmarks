@@ -61,6 +61,6 @@ int main(int argc, char* argv[]) {
 #endif
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
     duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
-    std::cout << "tbb rank buffer " << NCORES<< ": " << time_span.count() << " seconds.\n";
+    std::cout << "tbb partition buffer " << NCORES<< ": " << time_span.count() << " seconds.\n";
 
 }
