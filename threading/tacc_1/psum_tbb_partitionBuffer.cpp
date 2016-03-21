@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
     tbb::task_scheduler_init init(NCORES);
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     static tbb::simple_partitioner sp;
-    size_t psize = (BUFSIZE / (NCORES[jj]*4));
+    size_t psize = (BUFSIZE / (NCORES*4));
     int *a = bufs[0];
 #ifdef TAU_ENABLED
   TAU_START("Outter for loop");
