@@ -11,9 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NRA 992 /* number of rows in matrix A */
-#define NCA 240                 /* number of columns in matrix A */
-#define NCB 200                /* number of columns in matrix B */
+#define NRA 1024 /* number of rows in matrix A */
+#define NCA 440                 /* number of columns in matrix A and rows of B*/
+#define NCB 400                /* number of columns in matrix B */
 
 int main (int argc, char *argv[]) 
 {
