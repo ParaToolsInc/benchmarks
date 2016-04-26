@@ -6,8 +6,11 @@
 # include <omp.h>
 
 using namespace std;
+# define NX 161
+# define NY 161
 
-
+double u_exact ( double x, double y );
+double uxxyy_exact ( double x, double y );
 
 
 //****************************************************************************80
@@ -349,4 +352,5 @@ double uxxyy_exact ( double x, double y )
 
   return value;
 }
-
+# undef NX
+# undef NY
