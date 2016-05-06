@@ -4,6 +4,9 @@
 # include <ctime>
 # include <cmath>
 # include <omp.h>
+#ifdef __USE_MPI
+# include <mpi.h>
+#endif
 
 using namespace std;
 
@@ -13,7 +16,7 @@ using namespace std;
 int main ( int argc, char *argv[] );
 double r8mat_rms ( int m, int n, double a[NX][NY] );
 void rhs ( int nx, int ny, double f[NX][NY] );
-void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY], 
+void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
   int itold, int itnew, double u[NX][NY], double unew[NX][NY] );
 void timestamp ( );
 double u_exact ( double x, double y );
@@ -57,7 +60,7 @@ int main ( int argc, char *argv[] )
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -94,6 +97,11 @@ int main ( int argc, char *argv[] )
   double x;
   double y;
 
+#ifdef __USE_MPI
+  MPI_Init(&argc, &argv);
+#endif
+
+
   dx = 1.0 / ( double ) ( nx - 1 );
   dy = 1.0 / ( double ) ( ny - 1 );
 //
@@ -112,7 +120,7 @@ int main ( int argc, char *argv[] )
   id = omp_get_thread_num ( );
   if ( id == 0 )
   {
-    cout << "  The maximum number of threads is " << omp_get_num_threads ( ) << "\n"; 
+    cout << "  The maximum number of threads is " << omp_get_num_threads ( ) << "\n";
   }
 }
   cout << "\n";
@@ -340,7 +348,7 @@ void rhs ( int nx, int ny, double f[NX][NY] )
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -391,7 +399,7 @@ void rhs ( int nx, int ny, double f[NX][NY] )
 }
 //****************************************************************************80
 
-void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY], 
+void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
   int itold, int itnew, double u[NX][NY], double unew[NX][NY] )
 
 //****************************************************************************80
@@ -402,7 +410,7 @@ void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -425,11 +433,11 @@ void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
 //    Input, int ITNEW, the desired iteration index
 //    on output.
 //
-//    Input, double U[NX][NY], the solution estimate on 
+//    Input, double U[NX][NY], the solution estimate on
 //    iteration ITNEW-1.
 //
-//    Input/output, double UNEW[NX][NY], on input, the solution 
-//    estimate on iteration ITOLD.  On output, the solution estimate on 
+//    Input/output, double UNEW[NX][NY], on input, the solution
+//    estimate on iteration ITOLD.  On output, the solution estimate on
 //    iteration ITNEW.
 //
 {
@@ -465,8 +473,8 @@ void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
           unew[i][j] = f[i][j];
         }
         else
-        { 
-          unew[i][j] = 0.25 * ( 
+        {
+          unew[i][j] = 0.25 * (
             u[i-1][j] + u[i][j+1] + u[i][j-1] + u[i+1][j] + f[i][j] * dx * dy );
         }
       }
@@ -491,7 +499,7 @@ void timestamp ( )
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -549,7 +557,7 @@ double u_exact ( double x, double y )
 //
 //    Input, double X, Y, the coordinates of a point.
 //
-//    Output, double U_EXACT, the value of the exact solution 
+//    Output, double U_EXACT, the value of the exact solution
 //    at (X,Y).
 //
 {
@@ -586,7 +594,7 @@ double uxxyy_exact ( double x, double y )
 //
 //    Input, double X, Y, the coordinates of a point.
 //
-//    Output, double UXXYY_EXACT, the value of 
+//    Output, double UXXYY_EXACT, the value of
 //    ( d/dx d/dx + d/dy d/dy ) of the exact solution at (X,Y).
 //
 {
@@ -594,8 +602,11 @@ double uxxyy_exact ( double x, double y )
   double value;
 
   value = - pi * pi * ( x * x + y * y ) * sin ( pi * x * y );
-
+#ifdef __USE_MPI
+  MPI_Finalize();
+#endif
   return value;
+
 }
 # undef NX
 # undef NY
