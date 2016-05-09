@@ -4,6 +4,8 @@
 # include <ctime>
 # include <cmath>
 # include <omp.h>
+#include <dlfcn.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -126,9 +128,26 @@ int main ( int argc, char *argv[] )
   cout << "  The number of interior Y grid points is " << ny << "\n";
   cout << "  The X grid spacing is " << dx << "\n";
   cout << "  The Y grid spacing is " << dy << "\n";
+
+/* load the vectorOps.so */
+void *dlhandle;
+
+#ifdef __APPLE__
+dlhandle = dlopen("libvectorOps.dylib", RTLD_LAZY | RTLD_LOCAL);
+#elif
+dlhandle = dlopen("libvectorOps.so", RTLD_LAZY | RTLD_LOCAL);
+#endif
+if (dlhandle == NULL) {
+     /* couldn't open DSO */
+     printf("Error: %s\n", dlerror());
+     exit(EXIT_FAILURE);
+}
+
 //
 //  Set the right hand side array F.
 //
+
+
   rhs ( nx, ny, f );
 //
 //  Set the initial solution estimate UNEW.
