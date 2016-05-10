@@ -93,6 +93,12 @@ int main ( int argc, char *argv[] )
   double x;
   double y;
 
+
+  #ifdef __USE_MPI
+  MPI_Init(&argc, &argv);
+  #endif
+
+
   dx = 1.0 / ( double ) ( nx - 1 );
   dy = 1.0 / ( double ) ( ny - 1 );
 //
@@ -249,6 +255,9 @@ int main ( int argc, char *argv[] )
 //
 //  Terminate.
 //
+#ifdef __USE_MPI
+ MPI_Finalize();
+#endif
   cout << "\n";
   cout << "POISSON_OPENMP:\n";
   cout << "  Normal end of execution.\n";
