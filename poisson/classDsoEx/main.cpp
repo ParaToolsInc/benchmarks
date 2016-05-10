@@ -1,3 +1,6 @@
+# define NX 161
+# define NY 161
+
 # include <cstdlib>
 # include <iostream>
 # include <iomanip>
@@ -6,17 +9,21 @@
 # include <omp.h>
 #include <dlfcn.h>
 #include <stdlib.h>
+#include "vectorOps.h"
+#include "jacobi.h"
+
+
+
+
 
 using namespace std;
 
-# define NX 161
-# define NY 161
 
 int main ( int argc, char *argv[] );
 double r8mat_rms ( int m, int n, double a[NX][NY] );
-void rhs ( int nx, int ny, double f[NX][NY] );
-void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
-  int itold, int itnew, double u[NX][NY], double unew[NX][NY] );
+//void rhs ( int nx, int ny, double f[NX][NY] );
+//void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
+//  int itold, int itnew, double u[NX][NY], double unew[NX][NY] );
 void timestamp ( );
 double u_exact ( double x, double y );
 double uxxyy_exact ( double x, double y );
@@ -147,8 +154,11 @@ if (dlhandle == NULL) {
 //  Set the right hand side array F.
 //
 
+myVector vec1;
+vec1.rhs ( nx, ny, f );
 
-  rhs ( nx, ny, f );
+dlclose(dlhandle); //close vectorOps DSO
+
 //
 //  Set the initial solution estimate UNEW.
 //  We are "allowed" to pick up the boundary conditions exactly.
@@ -208,6 +218,19 @@ if (dlhandle == NULL) {
 
   itnew = 0;
 
+  #ifdef __APPLE__
+  dlhandle = dlopen("libjacobi.dylib", RTLD_LAZY | RTLD_LOCAL);
+  #elif
+  dlhandle = dlopen("libjacobi.so", RTLD_LAZY | RTLD_LOCAL);
+  #endif
+  if (dlhandle == NULL) {
+       /* couldn't open DSO */
+       printf("Error: %s\n", dlerror());
+       exit(EXIT_FAILURE);
+  }
+
+  myJacobi jacobi1;
+
   for ( ; ; )
   {
     itold = itnew;
@@ -216,7 +239,7 @@ if (dlhandle == NULL) {
 //  SWEEP carries out 500 Jacobi steps in parallel before we come
 //  back to check for convergence.
 //
-    sweep ( nx, ny, dx, dy, f, itold, itnew, u, unew );
+    jacobi1.sweep ( nx, ny, dx, dy, f, itold, itnew, u, unew );
 //
 //  Check for convergence.
 //
@@ -262,6 +285,9 @@ if (dlhandle == NULL) {
   {
     cout << "  The iteration has NOT converged.\n";
   }
+
+
+  dlclose(dlhandle); //unload libjacobi  DSO
 
   wtime = omp_get_wtime ( ) - wtime;
   cout << "\n";

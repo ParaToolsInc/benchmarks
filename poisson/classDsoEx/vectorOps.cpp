@@ -1,25 +1,9 @@
-# include <cstdlib>
-# include <iostream>
-# include <iomanip>
-# include <ctime>
-# include <cmath>
-# include <omp.h>
 
-using namespace std;
-# define NX 161
-# define NY 161
+#include "vectorOps.h"
 
-double u_exact ( double x, double y );
-double uxxyy_exact ( double x, double y );
-
-
-class vector
-
-# define NX 161
-# define NY 161
 //****************************************************************************80
 
-void rhs ( int nx, int ny, double f[NX][NY] )
+void myVector::rhs ( int nx, int ny, double f[NX][NY] )
 
 //****************************************************************************80
 //
@@ -99,7 +83,7 @@ void rhs ( int nx, int ny, double f[NX][NY] )
   cout << "  RMS of F = " << fnorm << "\n";
 
   return;
-}
+  }
 //****************************************************************************80
 
 

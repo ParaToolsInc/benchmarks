@@ -1,22 +1,10 @@
-# include <cstdlib>
-# include <iostream>
-# include <iomanip>
-# include <ctime>
-# include <cmath>
-# include <omp.h>
 
-using namespace std;
-# define NX 161
-# define NY 161
-
-double u_exact ( double x, double y );
-double uxxyy_exact ( double x, double y );
-
+#include <jacobi.h>
 
 
 //****************************************************************************80
 
-void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
+void myJacobi::sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
   int itold, int itnew, double u[NX][NY], double unew[NX][NY] )
 
 //****************************************************************************80
