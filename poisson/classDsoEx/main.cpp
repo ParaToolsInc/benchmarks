@@ -9,7 +9,7 @@
 # include <omp.h>
 # include <dlfcn.h>
 # include <stdlib.h>
-	
+
 #include <stdio.h>
 # include "vectorOps.h"
 # include "jacobi.h"
@@ -21,11 +21,7 @@
 using namespace std;
 
 
-int main ( int argc, char *argv[] );
 double r8mat_rms ( int m, int n, double a[NX][NY] );
-//void rhs ( int nx, int ny, double f[NX][NY] );
-//void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
-//  int itold, int itnew, double u[NX][NY], double unew[NX][NY] );
 void timestamp ( );
 double u_exact ( double x, double y );
 double uxxyy_exact ( double x, double y );
