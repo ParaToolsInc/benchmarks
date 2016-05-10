@@ -10,7 +10,6 @@ using namespace std;
 # define NX 161
 # define NY 161
 
-int main ( int argc, char *argv[] );
 double r8mat_rms ( int m, int n, double a[NX][NY] );
 void rhs ( int nx, int ny, double f[NX][NY] );
 void sweep ( int nx, int ny, double dx, double dy, double f[NX][NY],
