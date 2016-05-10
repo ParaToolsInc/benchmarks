@@ -7,10 +7,12 @@
 # include <ctime>
 # include <cmath>
 # include <omp.h>
-#include <dlfcn.h>
-#include <stdlib.h>
-#include "vectorOps.h"
-#include "jacobi.h"
+# include <dlfcn.h>
+# include <stdlib.h>
+	
+#include <stdio.h>
+# include "vectorOps.h"
+# include "jacobi.h"
 
 
 
@@ -141,7 +143,7 @@ void *dlhandle;
 
 #ifdef __APPLE__
 dlhandle = dlopen("libvectorOps.dylib", RTLD_LAZY | RTLD_LOCAL);
-#elif
+#else
 dlhandle = dlopen("libvectorOps.so", RTLD_LAZY | RTLD_LOCAL);
 #endif
 if (dlhandle == NULL) {
@@ -220,7 +222,7 @@ dlclose(dlhandle); //close vectorOps DSO
 
   #ifdef __APPLE__
   dlhandle = dlopen("libjacobi.dylib", RTLD_LAZY | RTLD_LOCAL);
-  #elif
+  #else
   dlhandle = dlopen("libjacobi.so", RTLD_LAZY | RTLD_LOCAL);
   #endif
   if (dlhandle == NULL) {
