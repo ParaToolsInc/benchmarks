@@ -5,6 +5,10 @@
 # include <cmath>
 # include <omp.h>
 
+#ifdef __USE_MPI
+#include <mpi.h>
+#endif
+
 using namespace std;
 
 # define NX 161
