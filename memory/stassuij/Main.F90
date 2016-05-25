@@ -21,12 +21,12 @@ integer msval, nsflip, nscyc, nsexchg
 integer, pointer :: nsexch(:,:), mss(:,:,:), msss(:,:,:)
 common /spin/ msval(ns_all+(nsp-ns),npart), nsflip(nsp,npart), nscyc(ns),nsexch, mss, msss
 
-logical(1) :: nsflip_flip, mss_flip, msss_flip 
-logical(1), pointer :: nsexch_flip(:,:)      
+logical(1) :: nsflip_flip, mss_flip, msss_flip
+logical(1), pointer :: nsexch_flip(:,:)
 common /spin_log1/ nsexch_flip, nsflip_flip(npart), mss_flip(nprs)
 
 real(4) :: flip_sign, nsflip_sign, nscyc_sign
-real(4), pointer :: nsexch_sign(:,:), mss_sign(:,:), msss_sign(:,:)  
+real(4), pointer :: nsexch_sign(:,:), mss_sign(:,:), msss_sign(:,:)
 common /spin_r4/ flip_sign(ns_all), nsflip_sign(nsp), nscyc_sign(ns), nsexch_sign, mss_sign, msss_sign
 
 integer :: k12
@@ -47,6 +47,28 @@ complex(8) y1,y2,y3,y4
 
 integer(8) t1,t2,timebase,time_rate
 !real(8) t1,t2
+
+#ifdef __USE_MPI
+	include 'mpif.h'
+	parameter (MASTER = 0)
+
+	integer numtasks, taskid, len, ierr
+	character(MPI_MAX_PROCESSOR_NAME) hostname
+
+	call MPI_INIT(ierr)
+	call MPI_COMM_SIZE(MPI_COMM_WORLD, numtasks, ierr)
+	call MPI_COMM_RANK(MPI_COMM_WORLD, taskid, ierr)
+	call MPI_GET_PROCESSOR_NAME(hostname, len, ierr)
+	write(*,20) taskid, hostname
+	if (taskid .eq. MASTER) then
+		write(*,30) numtasks
+	end if
+
+	20  format('Hello from task ',I2,' on ',A48)
+	30  format('MASTER: Number of MPI tasks is: ',I2)
+
+#endif
+
 
 !$omp parallel private(mythread,nthreads)
     mythread = omp_get_thread_num()
@@ -89,7 +111,7 @@ mss_flip = .true.
 do j = 1, nsg
     !do i = 1,4
         !p_mss( i,j,: ) = min( 2*j+1, 2048 )
-    !enddo    
+    !enddo
     p_mss( 1,j,: ) =    j
     p_mss( 2,j,: ) =  512 + j
     p_mss( 3,j,: ) = 1024 + j
@@ -126,5 +148,8 @@ deallocate( cr )
 deallocate( p_mss )
 deallocate( p_mss_sign )
 
-end program Main
+#ifdef __USE_MPI
+      call MPI_FINALIZE(ierr)
+#endif
 
+end program Main
