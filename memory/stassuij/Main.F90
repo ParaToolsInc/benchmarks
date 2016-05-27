@@ -50,6 +50,7 @@ integer(8) t1,t2,timebase,time_rate
 
 #ifdef __USE_MPI
 	include 'mpif.h'
+        integer MASTER
 	parameter (MASTER = 0)
 
 	integer numtasks, taskid, len, ierr
