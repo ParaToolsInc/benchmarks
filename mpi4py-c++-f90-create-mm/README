@@ -1,0 +1,126 @@
+On spirit:
+
+qsub -l ncpus=48 -q debug -l walltime=1:00:00 -I
+module use /app/comenv/pkgs/ptoolsrte-0.7/etc
+module load ptoolsrte
+module swap intel-compilers/12.1.0 intel-compilers/14.0.2
+
+
+
+
+
+
+
+To test this on Mana:
+
+# Get an interactive job
+qsub -I  -l walltime=0:25:00 -q debug -A ARLAP96070PET -l select=1:mpiprocs=8:ncpus=8
+
+# Load the PToolsRTE module
+module use $PET_HOME/pkgs/ptoolsrte/etc
+module load ptoolsrte
+
+# Build the example
+make clean
+make
+
+Vanilla run:
+mpirun -np 4 python ./samarcrun.py
+
+With tau_exec:
+export PATH=/mnt/cfs/pkgs/PTOOLS/pkgs/tau-2.22.2b/x86_64/bin:$PATH
+mpirun -np 4 tau_exec -memory_debug -T PYTHON python ./wrapper.py
+pprof
+paraprof 
+
+With tau_exec and TAU compilers:
+export PATH=/mnt/cfs/pkgs/PTOOLS/pkgs/tau-2.22.2b/x86_64/bin:$PATH
+make clean
+make TAU=1
+mpirun -np 4 tau_exec -memory_debug -T PYTHON python ./wrapper.py
+pprof
+paraprof 
+
+#######################################################################
+Example demonstrating the python-C++-f90 interfaces used under HI-ARMS
+
+                       Andy Wissink
+                          8/07
+
+Updated for mpi4py by John Linford <jlinford@paratools.com> 3 May 2013
+#######################################################################
+
+Compile:
+^^^^^^^^
+   1. edit Makefile to set CXX, CC, F90 compilers and PY_INCL location
+   2. cd swig; edit Makefile to set SWIG_LIB location; cd ..
+   3. make - generates _samint.so
+   4. to test: 
+         python
+         >>> import _samint
+         (should give no errors)
+
+Running Example:
+^^^^^^^^^^^^^^^^
+   1. cd example
+   2. edit samarcrun.py 
+      line 10: set the sys.path to your location of 'mpi4py-c++-f90'
+               (where to look for samarc.py)
+      line 16: set the input file 
+               (currently 'coarse.input', the one thats already in there)
+      line 20-: set run parameters 
+   3. python samarcrun.py
+  
+#######################################################################
+
+
+Functions:
+^^^^^^^^^^
+   samarcInit(filename) - reads samarc input file, generates initial Cartesian grid system, 
+                          and initializes Q on the grids.
+   samarcStep(time,dt)  - takes a flow solver timestep 
+   samarcRegrid(time)   - re-generates grids, based on solution error 
+                          markings, and transfers data from the old to 
+                          the new grid system.
+   samarcWritePlotData(time)   - writes plot3d or visit output 
+   samarcFinish()       - de-allocates any arrays and shuts down objects.
+
+Hand generated files:
+^^^^^^^^^^^^^^^^^^^^^
+   swig/samint.i - interface to SAMINT C++ class
+   pycintfc.C  - a set of C methods that invoke the above functions
+   pyGlobals.h - pointers to obgrids,obdata,ilo,ihi,xlo,dx,*ibl,*q
+   global.i    - ???
+   samarc.py - python class that invokes the above methods in samint.py.
+               methods:
+                  __init__ (constructor)
+                  getGlobalGridInfo()
+                  getLocalPatchInfo()
+                  runStep(time,dt)
+                  writePlotData(time,step)
+                  reGrid(time)
+                  finish()
+
+Auto generated files:
+^^^^^^^^^^^^^^^^^^^^^
+   swig/samint.py  - automatically generated python wrapper generated from 
+                     samint.i that invokes the above fns.
+   swig/samint_wrap.c  
+
+Compilation:
+^^^^^^^^^^^^
+   1. Run swig on "samint.i" to generate samint.py and samint_wrap.c:
+      swig -python -I../ -I/home/wissink/pkg/swig-1.3.31/Lib 
+           -I/home/wissink/pkg/swig-1.3.31/Lib/python samint.i
+      --> generates samint.py, samint_wrap.c
+
+   2. create the *.o for samint_wrap.c, SAMINT.C, and pycintfc.C 
+      mpicxx -fpic -c SAMINT.C      
+      mpicxx -fpic -c samint_wrap.c -I../ -I/usr/include/python2.4
+      mpicxx -fpic -c samarc.C      -I../ -I/usr/include/python2.4
+   
+A. Wissink
+2/12/07
+     
+
+   
