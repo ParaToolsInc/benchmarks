@@ -7,11 +7,21 @@
 .deps
 
 # Autoconf files
+/aclocal.m4
+/autom4te.cache
+/stamp-h1
+/Makefile.pkg
+/config.h
+/config.log
+/config.status
+/config.guess
 
 # Ignore auto-generated Makefiles
+Makefile
 
 # OS X files
 .DS_Store
 ._*
 
 # External library
+ext_library
